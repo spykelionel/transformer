@@ -30,3 +30,14 @@ The overall goal seems to be detecting faults in a transformer using DGA and SFR
 | C4   | 70       | Tester                 |          |        | the relocation of transformer. Earthquake, set of phase         | the relocation of transformer. Earthquake, set of phase |
 | C5   | 5        | Smart sweep algorithm  |          |        | the relocation of transformer. Earthquake, set of phase         | the relocation of transformer. Earthquake, set of phase |
 | C6   | 30       | Expert                 | 95       | Simple | Graph                                                           | SFRA                                                      |
+
+
+# Complete table
+| Component (step) | Input | Tools | Objective | Criteria | Duration | Cost | Personnel | Accuracy | Type | Type output | Origin | Sn |
+|-|-|-|-|-|-|-|-|-|-|-|-|-|  
+| C1 | Overvoltages_network maneuvers | Gas tight syringe Argon purges vials | Take the oil samples and fill into Argon purges vials | temperature above up 300° C. | 10 | ? | Technician | 99% | Simple | Sample oil | DGA |  |
+| C2 | overvoltages,_network maneuvers Gas_chromatography headspace sampling | 20 Vials equilibrated by sample loop in HSS and inject into GC | No air in the argon purge | 5 | ? | Technician | 97% | simple | Sample oil | Dga | |
+| C3 | overvoltages,_network maneuvers_Proportion of each gaz. | Calculator | 3 Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range | Roger_normal | 2 | ? | Technician | 99.99% | simple | High energy electrical discharge with acurracy | Roger’s method | |
+| C4 | relocation of the transformer._Earthquake,_set of phase | Tester 70 Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios | At least one of the situations satisfied and the frequency range available | 5 | ? | Expert | 95% | Simple | List of voltages (primary and secondary) and list of ratios | SFRA | | 
+| C5 | relocation of the transformer._Earthquake_set of phase | Smart sweep algorithm | 5 Calculate the gains and plot the SFRA test for the different phases. (gain as a function of frequencies) (Open Circuit/Close Circuit) | 600 | ? | Technician | 95% | Simple | Graph SFRA | SFRA | |
+| C6 | relocation of the transformer._earthquake_set of phase | SFRAv6.2 | 300 Detect the presence of failure | List of voltages (primary and secondary) and list of ratios (very slow) | 15 | ? | Expert | 95% | Simple | The fault with precision. | SFRA | |
