@@ -22,3 +22,11 @@ For each step, there are inputs, tools/components used, objectives, criteria to 
 The overall goal seems to be detecting faults in a transformer using DGA and SFRA in a systematic way. The accuracy and costs associated with each step are provided as criteria.
 
 
+| Node | Duration | Personnel              | Accuracy | Type   | Type Output                                                     | Origin                                                    |
+|------|----------|------------------------|----------|--------|-----------------------------------------------------------------|-----------------------------------------------------------|
+| C1   | 10       | Technician             | 99       | Simple | Sample oil                                                      | DGA                                                       |
+| C2   | 20       | Technician             | 97       | Simple | Sample oil                                                      | DGA                                                       |
+| C3   | 0        | Expert                 | 95       | Simple | List of voltages (primary and secondary) and list of ratios     | SFRA                                                      |
+| C4   | 70       | Tester                 |          |        | the relocation of transformer. Earthquake, set of phase         | the relocation of transformer. Earthquake, set of phase |
+| C5   | 5        | Smart sweep algorithm  |          |        | the relocation of transformer. Earthquake, set of phase         | the relocation of transformer. Earthquake, set of phase |
+| C6   | 30       | Expert                 | 95       | Simple | Graph                                                           | SFRA                                                      |
