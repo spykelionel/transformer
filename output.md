@@ -1,17 +1,17 @@
-| Input                                  | Output                                            |
-| -------------------------------------- | ------------------------------------------------- |
-| {'Overvoltage': (0, 0, 0, 0, 0, 0)}    | {'Component_Step_Objectif': []}                  |
-| {'Overvoltage': (0, 0, 0, 1, 0, 0)}    | {'Component_Step_Objectif': ['Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (0, 0, 1, 0, 0, 0)}    | {'Component_Step_Objectif': ['Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range']} |
-| {'Overvoltage': (0, 0, 1, 1, 0, 0)}    | {'Component_Step_Objectif': ['Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range', 'Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (0, 1, 0, 0, 0, 0)}    | {'Component_Step_Objectif': ['Vials equilibrated by sample loop in HSS and inject into GC']} |
-| {'Overvoltage': (0, 1, 0, 1, 0, 0)}    | {'Component_Step_Objectif': ['Vials equilibrated by sample loop in HSS and inject into GC', 'Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (0, 1, 1, 0, 0, 0)}    | {'Component_Step_Objectif': ['Vials equilibrated by sample loop in HSS and inject into GC', 'Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range']} |
-| {'Overvoltage': (0, 1, 1, 1, 0, 0)}    | {'Component_Step_Objectif': ['Vials equilibrated by sample loop in HSS and inject into GC', 'Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range', 'Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (1, 0, 0, 0, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials']} |
-| {'Overvoltage': (1, 0, 0, 1, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials', 'Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (1, 0, 1, 0, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials', 'Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range']} |
-| {'Overvoltage': (1, 0, 1, 1, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials', 'Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range', 'Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (1, 1, 0, 0, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials', 'Vials equilibrated by sample loop in HSS and inject into GC']} |
-| {'Overvoltage': (1, 1, 0, 1, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials', 'Vials equilibrated by sample loop in HSS and inject into GC', 'Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios']} |
-| {'Overvoltage': (1, 1, 1, 0, 0, 0)}    | {'Component_Step_Objectif': ['Take the oil samples and fill into Argon purges vials', 'Vials equilibrated by sample loop in HSS and inject into GC', 'Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range']} |
+| Cost | Duration | Component_Step_Objectif |
+|------|----------|--------------------------|
+| 60   | 60       | []                       |
+| 70   | 55       | ['C4']                   |
+| 70   | 55       | ['C3']                   |
+| 80   | 50       | ['C3', 'C4']             |
+| 70   | 55       | ['C2']                   |
+| 80   | 50       | ['C2', 'C4']             |
+| 80   | 50       | ['C2', 'C3']             |
+| 90   | 45       | ['C2', 'C3', 'C4']       |
+| 70   | 55       | ['C1']                   |
+| 80   | 50       | ['C1', 'C4']             |
+| 80   | 50       | ['C1', 'C3']             |
+| 90   | 45       | ['C1', 'C3', 'C4']       |
+| 80   | 50       | ['C1', 'C2']             |
+| 90   | 45       | ['C1', 'C2', 'C4']       |
+| 90   | 45       | ['C1', 'C2', 'C3']       |
