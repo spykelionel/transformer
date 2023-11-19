@@ -17,8 +17,8 @@ tools = [
     "SFRAv6.2"
 ]
 
+label = ["C1", "c2", "c3", "c4", "c5", "c6"]
 cost = [10, 20, 3, 70, 5, 300]
-
 component_or_step_objectif = [
     "Take the oil samples and fill into Argon purges vials",
     "Vials equilibrated by sample loop in HSS and inject into GC",
@@ -27,6 +27,7 @@ component_or_step_objectif = [
     "Calculate the gains and plot the SFRA test for the different phases. (gain as a function of frequencies)",
     "Detect the presence of failure"
 ]
+duration = [10, 5, 2, 5, 600, 15]
 
 criteria = [
     "Temperature above up 300deg C",
@@ -36,8 +37,6 @@ criteria = [
     "(Open Circuit/Close Circuit)",
     "List of voltages (primary and secondary) and list of ratios (very slot)",
 ]
-
-duration = [10, 5, 2, 5, 600, 15]
 
 personnel = ["Technicien", "Technicien", "Technicien", "Expert", "Technicien", "Expert"]
 
