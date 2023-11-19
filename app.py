@@ -2,7 +2,7 @@ sn = ["C1", "c2", "c3", "c4", "c5", "c6"]
 input = [
     "Overvoltages_network maneuvers",
     "Overvoltages_network maneuvers",
-    ["Overvoltages_network maneuvers", "maneuvers_Proportion of each gaz",],
+    ("Overvoltages_network maneuvers", "maneuvers_Proportion of each gaz",),
     "relocation of the transformer._Earthquake,_set of phase",
     "relocation of the transformer._Earthquake,_set of phase",
     "relocation of the transformer._Earthquake,_set of phase",
