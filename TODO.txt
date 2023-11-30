@@ -1,0 +1,4 @@
+Train the model normally for the 6 classes
+- Then run predictions on each class,
+- Take the labels who's accuracy is within a certain range i.e. 90<label<100
+- The release result
