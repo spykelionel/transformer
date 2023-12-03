@@ -41,7 +41,6 @@ model = build_and_train_model(X_train_scaled, y_train, num_classes)
 
 # Evaluate the model on the test set
 test_loss, test_acc = model.evaluate(X_test_scaled, y_test)
-print(f'Test accuracy: {test_acc}')
 
 # Save the model
 model.save('component_objective_model.h5')
@@ -50,7 +49,6 @@ model.save('component_objective_model.h5')
 loaded_model = keras.models.load_model('component_objective_model.h5')
 # Evaluate the model on the test set
 test_loss, test_acc = loaded_model.evaluate(X_test_scaled, y_test)
-print(f'Test accuracy: {test_acc*100}')
 
 # Example prediction
 sample_input = np.array([[70, 55]])  # Replace with your input
