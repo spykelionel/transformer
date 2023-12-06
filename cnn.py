@@ -9,9 +9,9 @@ import tensorflow as tf
 data = {
     'Cost': [60, 70, 70, 80, 70, 80, 80, 90, 70, 80, 80, 90, 80, 90, 90],
     'Duration': [60, 55, 55, 50, 55, 50, 50, 45, 55, 50, 50, 45, 50, 45, 45],
-    'Component_Step_Objectif': [[], ['C4'], ['C3'], ['C3', 'C4'], ['C2'], ['C2', 'C4'], ['C2', 'C3'], 
-                                ['C2', 'C3', 'C4'], ['C1'], ['C1', 'C4'], ['C1', 'C3'], ['C1', 'C3', 'C4'], 
-                                ['C1', 'C2'], ['C1', 'C2', 'C4'], ['C1', 'C2', 'C3']]
+    'Component_Step_Objectif': [[], ['C5'], ['C3'], ['C3', 'C4'], ['C2'], ['C2', 'C4'], ['C2', 'C3'], 
+                                ['C2', 'C6', 'C4'], ['C1'], ['C1', 'C4'], ['C1', 'C3'], ['C1', 'C3', 'C4'], 
+                                ['C1', 'C2'], ['C5', 'C2', 'C6'], ['C1', 'C2', 'C3']]
 }
 
 df = pd.DataFrame(data)
@@ -32,6 +32,8 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(32, activation='relu'),
     tf.keras.layers.Dense(len(mlb.classes_), activation='softmax')  # Output layer with softmax for multi-class classification
 ])
+
+print("Classes:", len(mlb.classes_))
 
 # Step 4: Model Compilation
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
