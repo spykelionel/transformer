@@ -3,8 +3,6 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MultiLabelBinarizer
 import tensorflow as tf
-from tensorflow.keras.utils import plot_model
-import matplotlib.pyplot as plt
 
 
 # Creating a DataFrame with the provided data
@@ -37,15 +35,6 @@ model = tf.keras.Sequential([
 
 # Step 4: Model Compilation
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
-# Save the model architecture as an image
-plot_model(model, to_file='model_architecture.png', show_shapes=True, show_layer_names=True)
-
-# Display the image using matplotlib
-img = plt.imread('model_architecture.png')
-plt.imshow(img)
-plt.axis('off')
-plt.show()
 
 # training
 model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test))
