@@ -1,44 +1,61 @@
-import itertools
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MultiLabelBinarizer, StandardScaler
+from keras.models import Sequential
+from keras.layers import Dense, Activation, Embedding, Flatten, GlobalMaxPool1D, Dropout, Conv1D
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+from sklearn.preprocessing import StandardScaler
 
-labels = ["C1", "C2", "C3", "C4", "C5", "C6"]
+# Load the data from CSV
+df = pd.read_csv('random_data.csv')
 
-component_objectives = [
-    "Take the oil samples and fill into Argon purges vials",
-    "Vials equilibrated by sample loop in HSS and inject into GC",
-    "Check if the ratios ranges satisfy the Roger’s High energy electrical discharge ratio range",
-    "Connect the transformer to the analyzer and measure the different primary and secondary voltages and calculate the corresponding ratios",  
-    "Calculate the gains and plot the SFRA test for the different phases. (gain as a function of frequencies)",
-    "Detect the presence of failure"
-]  
+# Flatten the 'Component_Objectif' lists
+df['Component_Objectif'] = df['Component_Objectif'].apply(eval)
 
-costs = [10, 20, 3, 70, 5, 300]
+# Extracting features and labels
+features = df[['Cost', 'Duration']].values
+labels = df['Component_Objectif']
 
-durations = [10, 5, 2, 5, 600, 15]
+# Convert labels to a multi-label binary format
+mlb = MultiLabelBinarizer()
+labels = mlb.fit_transform(labels)
 
-overvoltage_values = [0, 1]
+# Split the data into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
 
-sequences = list(itertools.product(overvoltage_values, repeat=len(labels)))
+# Standardize the features
+scaler = StandardScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
 
-training_data = []
+# Build the CNN model
+model = Sequential()
+model.add(Dense(512, input_dim=2, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(len(mlb.classes_), activation='sigmoid'))  # Output layer
 
-for seq in sequences:
-    overvoltage = 1 if 1 in seq else 0
-    
-    input_data = {
-        "Overvoltage": overvoltage,
-        "Cost": sum([costs[i] for i in range(len(labels)) if seq[i] == 1]),
-        "Duration": sum([durations[i] for i in range(len(labels)) if seq[i] == 1])
-    }
-    
-    selected_index = next((i for i, value in enumerate(seq) if value == 1), None)
-    output_data = {}
-    if selected_index is not None:
-        output_data = {
-            "Component_Objective": component_objectives[selected_index]
-        }
+model.history
 
-    training_data.append({**input_data, **output_data})
-        
-# Display training sets 
-for data in training_data:
-    print(data)
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Define callbacks
+callbacks = [
+    ReduceLROnPlateau(),
+    EarlyStopping(patience=4),
+    ModelCheckpoint(filepath='model-cnn.keras', save_best_only=True)
+]
+
+# Train the model
+history = model.fit(x_train, y_train, epochs=20, batch_size=128, validation_split=0.1, callbacks=callbacks)
+
+# Evaluate the model on the test set
+metrics = model.evaluate(x_test, y_test)
+print("Loss: {}".format(metrics[0]))
+print("Accuracy: {}".format(metrics[1]))
