@@ -1,58 +1,60 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-from tensorflow import keras
-from tensorflow.keras import layers
+from sklearn.preprocessing import MultiLabelBinarizer
+import tensorflow as tf
+from tensorflow.keras.utils import plot_model
+import matplotlib.pyplot as plt
 
-# Load data from CSV
-df = pd.read_csv('transformer.csv')
 
-# Preprocess data
-label_encoder = LabelEncoder()
-df['Component_Step_Objectif'] = label_encoder.fit_transform(df['Component_Step_Objectif'])
+# Creating a DataFrame with the provided data
+data = {
+    'Cost': [60, 70, 70, 80, 70, 80, 80, 90, 70, 80, 80, 90, 80, 90, 90],
+    'Duration': [60, 55, 55, 50, 55, 50, 50, 45, 55, 50, 50, 45, 50, 45, 45],
+    'Component_Step_Objectif': [[], ['C4'], ['C3'], ['C3', 'C4'], ['C2'], ['C2', 'C4'], ['C2', 'C3'], 
+                                ['C2', 'C3', 'C4'], ['C1'], ['C1', 'C4'], ['C1', 'C3'], ['C1', 'C3', 'C4'], 
+                                ['C1', 'C2'], ['C1', 'C2', 'C4'], ['C1', 'C2', 'C3']]
+}
+
+df = pd.DataFrame(data)
+
+# Step 1: Data Preprocessing
 X = df[['Cost', 'Duration']]
 y = df['Component_Step_Objectif']
 
-# Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+mlb = MultiLabelBinarizer()
+y_encoded = mlb.fit_transform(y)
 
-# Standardize the input data
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+# Step 2: Data Splitting
+X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
 
-# Function to build and train the model
-def build_and_train_model(X_train, y_train, num_classes):
-    model = keras.Sequential([
-        layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
-        layers.Dense(128, activation='relu'),
-        layers.Dense(64, activation='relu'),
-        layers.Dense(num_classes, activation='softmax')
-    ])
-    
-    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-    model.fit(X_train, y_train, epochs=50, batch_size=16, validation_split=0.2)
-    return model
+# Step 3: Neural Network Architecture
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(2,)),
+    tf.keras.layers.Dense(32, activation='relu'),
+    tf.keras.layers.Dense(len(mlb.classes_), activation='softmax')  # Output layer with softmax for multi-class classification
+])
 
-# Build and train the model
-num_classes = len(label_encoder.classes_)
-model = build_and_train_model(X_train_scaled, y_train, num_classes)
+# Step 4: Model Compilation
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# Evaluate the model on the test set
-test_loss, test_acc = model.evaluate(X_test_scaled, y_test)
+# Save the model architecture as an image
+plot_model(model, to_file='model_architecture.png', show_shapes=True, show_layer_names=True)
 
-# Save the model
-model.save('component_objective_model.h5')
+# Display the image using matplotlib
+img = plt.imread('model_architecture.png')
+plt.imshow(img)
+plt.axis('off')
+plt.show()
 
-# Load the model
-loaded_model = keras.models.load_model('component_objective_model.h5')
-# Evaluate the model on the test set
-test_loss, test_acc = loaded_model.evaluate(X_test_scaled, y_test)
+# training
+model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test))
 
-# Example prediction
-sample_input = np.array([[70, 55]])  # Replace with your input
-scaled_input = scaler.transform(sample_input)
-decoded_prediction = loaded_model.predict_step(scaled_input)
-# decoded_prediction = label_encoder.inverse_transform()
-print(f'Predicted Component Objectif: {decoded_prediction}')
+# Step 6: Model Evaluation
+# test_loss, test_acc = model.evaluate(X_test, y_test)
+
+# Prediction. Change this data for your own case. 
+new_data = pd.DataFrame({'Cost': [50], 'Duration': [92]})
+prediction = model.predict(new_data)
+decoded_prediction = mlb.inverse_transform((prediction > 0.1).astype(int))
+print(f'Predicted Component_Step_Objectif: {decoded_prediction}')
